@@ -1,20 +1,21 @@
-#include <Arduino.h>
+#include <uart.h>
 #include <Initialization.h>
+#include <Operational.h>
 #include <Context.h>
 
 
-void Idle::on_do()
+void Initialization::on_do()
 {
 }
 
-void Idle::on_entry()
+void Initialization::on_entry()
 {
-  Serial.println("Initialization");
+  serial_println("Initialization");
 }
 
-void Idle::on_exit()
+void Initialization::on_exit()
 {
-  Serial.print("Initialization -> ");
+  serial_print("Initialization -> ");
 }
 
 

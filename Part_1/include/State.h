@@ -11,9 +11,6 @@ protected:
   Context *context_;
 
 public:
-  virtual ~State()
-  {
-  }
 
   void set_context(Context *context)
   {

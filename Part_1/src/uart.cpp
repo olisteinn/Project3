@@ -44,3 +44,13 @@ void serial_println(const char* str) {
     serial_print_char('\r'); // Carriage return
     serial_print_char('\n'); // Line feed
 }
+
+uint8_t serial_available(void) {
+    // RXC0 (Receive Complete) is 1 when an unread byte is in UDR0.
+    return (UCSR0A & (1 << RXC0)) ? 1 : 0;
+}
+
+char serial_read(void) {
+    // Reading UDR0 returns the byte and clears RXC0.
+    return UDR0;
+}

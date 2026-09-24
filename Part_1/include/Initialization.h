@@ -1,7 +1,7 @@
 #pragma once
 #include "State.h"
 
-class Idle : public State
+class Initialization : public State
 {
 public:
   void on_do() override;
