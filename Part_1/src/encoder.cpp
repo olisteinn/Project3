@@ -1,7 +1,6 @@
 #include "encoder.h"
 #include "timer.h"
 #include <avr/interrupt.h>
-#include <cstdint>
 #include <stdint.h>
 
 Encoder::Encoder(int pin1, int pin2, int pin_out) 

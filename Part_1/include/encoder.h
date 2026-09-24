@@ -1,7 +1,6 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 #include <avr/io.h>
-#include <cstdint>
 #include <stdint.h>
 #include "digital_in.h"
 #include "digital_out.h"
