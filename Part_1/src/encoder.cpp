@@ -1,6 +1,7 @@
 #include "encoder.h"
 #include "timer.h"
 #include <avr/interrupt.h>
+#include <cstdint>
 #include <stdint.h>
 
 Encoder::Encoder(int pin1, int pin2, int pin_out) 
@@ -39,7 +40,7 @@ void Encoder::update() {
                 history_head=0;
             }
             enc_memory[history_head].timestamps = time_mus();
-            enc_memory[history_head].counter_mem = counter;
+            enc_memory[history_head].counter_mem = (int8_t)counter;
 
         if (ext_counter >= rev_res || -rev_res >= ext_counter) {
             ext_counter = 0;
@@ -61,29 +62,25 @@ int16_t Encoder::position() {
     return val;
 }
 
-double Encoder::speed() {
+int16_t Encoder::speed() {
+    uint8_t head = history_head;
+    uint8_t tail = head + 1;
+    if (tail >= history_length) {
+        tail = 0;
+    }
     cli(); //stoppa interrupts til að copya >8 bit vals
-        int head = history_head;
-        int tail = head + 1;
-        if (tail >= history_length) {
-            tail = 0;
-        }
-        int32_t new_pos = enc_memory[head].counter_mem;
-        int32_t old_pos = enc_memory[tail].counter_mem;
-        uint32_t new_time = enc_memory[head].timestamps;
-        uint32_t old_time = enc_memory[tail].timestamps;
+        int32_t new_time = enc_memory[head].timestamps;
+        int32_t old_time = enc_memory[tail].timestamps;
+        int8_t delta_pos = enc_memory[head].counter_mem - enc_memory[tail].counter_mem;
     sei();
-
-    int32_t delta_pos = new_pos - old_pos;
-    uint32_t delta_time = new_time - old_time;
+    if ((time_mus() - new_time) > timeout) {
+        rpm = 0;
+        return rpm;
+    }
+    int32_t delta_time = new_time - old_time;
     if (delta_time == 0) {
         return rpm; 
     }
-    if (time_mus() - new_time > timeout) {
-        rpm = 0;
-        return rpm;
-    } else {
-        rpm = (delta_pos * 60000000.0) / (delta_time * rev_res);
-    }
+    rpm = 100L * (60000000L/rev_res) * delta_pos / delta_time;
     return rpm;
 }

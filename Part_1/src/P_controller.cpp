@@ -1,9 +1,8 @@
 #include "P_controller.h"
+#include <stdint.h>
 
-P_controller::P_controller(double Kp_arg) {
-    Kp = Kp_arg;
-}
+P_controller::P_controller(double Kp) : Kp(Kp) {}
 
-double P_controller::update(double ref,double actual) {
-    return Kp*(ref-actual);
+uint8_t P_controller::update(int16_t ref,int16_t actual) {
+    return (uint8_t)Kp*(ref-actual);
 }
