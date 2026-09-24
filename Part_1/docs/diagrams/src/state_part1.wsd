@@ -1,0 +1,26 @@
+@startuml state_machine
+skinparam defaultTextAlignment center
+skinparam ArrowColor #333333
+skinparam StateBackgroundColor LightSkyBlue
+skinparam StateBorderColor Navy
+skinparam Padding 15
+
+[*] --> Initialization
+
+state Initialization {
+Initialization : entry / Reset all states
+Initialization : exit / ?
+}
+
+state Operational {
+Operational : entry / Set motor
+Operational : exit / Stop motor
+}
+
+' Main flow
+Initialization --> Operational : Initialization Complete == True
+
+' Reset path
+Operational -up-> Initialization : Reset == True
+
+@enduml
