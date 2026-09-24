@@ -30,7 +30,7 @@ void Context::on_init()
   this->state_->on_init();
 }
 
-void Context::on_init()
+void Context::on_operate()
 {
   this->state_->on_operate();
 }

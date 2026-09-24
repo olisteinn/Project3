@@ -41,7 +41,7 @@ int main() {
     if (loop1 == true) {}
     if (loop2 == true) {}
 
-  char c;
+  char c=0;
 
   if (serial_available()) {
       c = serial_read();
@@ -51,7 +51,7 @@ int main() {
 }
   put_init = put_operate = false;
 
-  if (c='i'){
+  if (c=='i'){
     put_init = true;
   }
   if (c=='o'){
@@ -65,7 +65,6 @@ int main() {
     motor_state->on_init();
   if (put_operate)
     motor_state->on_operate();
-
   }
 
   bridge.sleep(); // sets pwm to 0 and slp pin low
