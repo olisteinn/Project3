@@ -6,7 +6,7 @@ class PI_controller : public controller {
     private:
         int16_t Kp;
         int16_t Ki;
-        int32_t KiE;
+        int16_t KiE;
         uint32_t last_time;
     public:
         PI_controller(double Kp_arg, double Ti);

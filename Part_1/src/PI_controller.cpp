@@ -16,7 +16,14 @@ int16_t PI_controller::update(int16_t ref, int16_t actual) {
     uint16_t dt = curr_time-last_time;// max 65,535 mícrósek á milli, overflowar annas, samt ekki hættulegt
     int32_t edt = (int32_t)e*dt; // (int32_t)int16_t*uint16_t er sama trix (notar mulsu instruction)
     last_time = curr_time;
-    KiE += (int16_t)((Ki*(edt>>8))>>16); // staggeruð bit shift passa að ekkert overflowi en missi samt ekki nákvæmni
+    int16_t KiE_i = (int16_t)((Ki*(edt>>8))>>16); // staggeruð bit shift passa að ekkert overflowi en missi samt ekki nákvæmni
+    if ((int32_t)KiE_i+KiE > 32767) {
+        KiE = 32767;
+    } else if ((int32_t)KiE_i+KiE < -32768) {
+        KiE = -32768;
+    } else {
+        KiE += KiE_i;
+    }
     int32_t total = (int32_t)Kpe+KiE;
     if (total > (255*128)) {
         return (255*128);
