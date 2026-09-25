@@ -80,6 +80,6 @@ int16_t Encoder::speed() {
     if (delta_time == 0) {
         return rpm; 
     }
-    rpm = 100L * (60000000L/rev_res) * delta_pos / delta_time;
+    rpm = 100 * (60000000L/rev_res) * delta_pos / delta_time;
     return rpm;
 }

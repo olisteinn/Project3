@@ -1,6 +1,4 @@
-#ifndef DIGITAL_OUT_H
-#define DIGITAL_OUT_H
-
+#pragma once
 #include <stdint.h>
 #include <avr/io.h>
 
@@ -69,5 +67,3 @@ class Digital_out {
             *portReg ^= pinMask;
         }
 };
-
-#endif

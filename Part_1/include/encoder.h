@@ -1,5 +1,4 @@
-#ifndef ENCODER_H
-#define ENCODER_H
+#pragma once
 #include <avr/io.h>
 #include <stdint.h>
 #include "digital_in.h"
@@ -33,5 +32,3 @@ class Encoder {
         bool direction(); // .direction() skilar "bool dir" sem er true/false
         int16_t speed(); // skilar rpm sem 16-bit int þar sem seinustu tveir stafir eru eftir kommu (skilar 10099 sem þýðir 100.99rpm)
 };
-
-#endif

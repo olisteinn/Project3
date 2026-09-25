@@ -46,6 +46,19 @@ void Drive::rev(uint8_t speed) {
     *Prev = speed;
 }
 
+void Drive::run(int16_t speed) {
+    if (speed == 0) {
+        *Pfwd = 0;
+        *Prev = 0;
+    } else if (speed > 0) {
+        *Prev = 0;
+        *Pfwd = (uint8_t)(speed >> 7);
+    } else {
+        *Pfwd = 0;
+        *Prev = (uint8_t)(-speed >> 7);
+    }
+}
+
 void Drive::stop(void) {
     *Pfwd = 0;
     *Prev = 0;

@@ -1,5 +1,4 @@
-#ifndef TIME_H
-#define TIME_H
+#pragma once
 #include <stdint.h>
 void time_init();
 
@@ -11,5 +10,3 @@ void set_loop_ms(uint8_t loop1_arg, uint16_t loop2_arg);
 
 extern volatile bool loop1;
 extern volatile bool loop2;
-
-#endif

@@ -1,6 +1,4 @@
-#ifndef DIGITAL_IN_H
-#define DIGITAL_IN_H
-
+#pragma once
 #include <stdint.h>
 #include <avr/io.h>
 
@@ -81,5 +79,3 @@ class Digital_in {
             return (*pinReg & pinMask) == 0;
         }
 };
-
-#endif

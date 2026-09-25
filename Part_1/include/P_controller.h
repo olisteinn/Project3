@@ -1,14 +1,11 @@
-#ifndef P_CONTROLLER_H
-#define P_CONTROLLER_H
+#pragma once
 #include "controller.h"
 #include <stdint.h>
 
-class P_controller {
+class P_controller : public controller {
     private:
-        uint8_t Kp;
+        int16_t Kp;
     public:
-        P_controller(uint8_t Kp);
-        uint8_t update(uint16_t ref,uint16_t actual);
+        P_controller(double Kp_arg);
+        int16_t update(int16_t ref,int16_t actual);
 };
-
-#endif

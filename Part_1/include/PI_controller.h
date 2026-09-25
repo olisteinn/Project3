@@ -1,18 +1,14 @@
-#ifndef PI_CONTROLLER_H
-#define PI_CONTROLLER_H
+#pragma once
 #include "controller.h"
 #include <stdint.h>
 
-class PI_controller {
+class PI_controller : public controller {
     private:
-        uint8_t Kp;
-        uint8_t Ki;
-        uint8_t Ti;
-        uint8_t e;
-        uint32_t
+        int16_t Kp;
+        int16_t Ki;
+        int32_t KiE;
+        uint32_t last_time;
     public:
-        PI_controller(uint8_t Kp, uint8_t Ki, uint8_t Ti, int16_t e);
-        uint8_t update(int16_t ref, int16_t actual);
+        PI_controller(double Kp_arg, double Ti);
+        int16_t update(int16_t ref, int16_t actual);
 };
-
-#endif
