@@ -5,22 +5,24 @@ skinparam StateBackgroundColor LightSkyBlue
 skinparam StateBorderColor Navy
 skinparam Padding 15
 
+
 [*] --> Initialization
 
 state Initialization {
-Initialization : entry / Reset all states
-Initialization : exit / ?
+Initialization : entry / initialize parameters
+Initialization : exit / send Boot-up message
 }
 
 state Operational {
-Operational : entry / Set motor
-Operational : exit / Stop motor
+Operational : entry / LED on, wake motor driver
+Operational : do / run speed controller
+Operational : exit / stop motor, LED off
 }
 
 ' Main flow
-Initialization --> Operational : Initialization Complete == True
+Initialization --> Operational : operate ('o')
 
 ' Reset path
-Operational -up-> Initialization : Reset == True
+Operational -up-> Initialization : reset ('r')
 
 @enduml

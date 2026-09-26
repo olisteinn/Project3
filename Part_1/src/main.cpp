@@ -28,12 +28,7 @@ ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder 
 }
 
 int main() {
-  serial_init();
-  time_init(); // initalize timer 1 for time tracking use
-  motor.init();  // initalize encoder
-  bridge.init();  // initalize motor driver
-  set_loop_ms(5,20); // sets loop durations in ms, one for controller loop other for serial print
-  led.init();
+
 
   sei();
 
