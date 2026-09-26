@@ -19,7 +19,9 @@ Context *motor_state;
 Encoder motor(D2,D4,D7); // encoder driver, (encoder in 1, encoder in 2, signal read out)
 Drive bridge(0,D8); // motor driver, (timer circuit no., slp pin)
 
-bool reset, put_operate;
+Digital_out led(D13);
+
+bool put_reset, put_operate;
 
 ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder class
   motor.update(); // reads position and timestamps on encoder in pin interrupt
@@ -31,6 +33,7 @@ int main() {
   motor.init();  // initalize encoder
   bridge.init();  // initalize motor driver
   set_loop_ms(5,20); // sets loop durations in ms, one for controller loop other for serial print
+  led.init();
 
   sei();
 
@@ -49,10 +52,10 @@ int main() {
       serial_print_char(c);
       serial_print("\r\n");
 }
-  reset = put_operate = false;
+  put_reset = put_operate = false;
 
   if (c=='r'){
-    reset = true;
+    put_reset = true;
   }
   if (c=='o'){
     put_operate = true;
@@ -61,7 +64,7 @@ int main() {
 
   motor_state->do_work();
   
-  if (reset)
+  if (put_reset)
     motor_state->reset();
   if (put_operate)
     motor_state->on_operate();

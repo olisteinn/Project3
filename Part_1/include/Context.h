@@ -19,5 +19,7 @@ public:
 
   void on_operate();
 
+  void on_pre_operate();
+
 
 };

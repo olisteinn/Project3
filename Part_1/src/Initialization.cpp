@@ -15,6 +15,7 @@ void Initialization::on_entry()
 
 void Initialization::on_exit()
 {
+  serial_println("Boot up complete");
   serial_print("Initialization -> ");
 }
 
@@ -28,5 +29,9 @@ void Initialization::on_operate()
   this->context_->transition_to(&operational_state);
 }
 
+void Initialization::on_pre_operate()
+{
+
+}
 
 

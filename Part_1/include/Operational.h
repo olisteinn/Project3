@@ -10,6 +10,7 @@ public:
 
   void reset() override;
   void on_operate() override;
+  void on_pre_operate() override;
 };
 
 extern Operational operational_state; 
