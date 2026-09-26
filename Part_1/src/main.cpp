@@ -32,7 +32,7 @@ ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder 
 int main() {
   Context ctx(&init_state);
   motor_state = &ctx;
-  sei();
+  serial_init();
 
   while (1) {
     if (loop1 == true) {}

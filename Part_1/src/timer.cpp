@@ -31,6 +31,12 @@ void time_init() {
     TCCR1B |= (1 << CS11) | (1 << CS10); // 1/64 prescaler
     // Þetta stillir hversu hratt interruptið keyrir, þarf að vera rétt miðað við prescaler:
     OCR1A = 249UL; // telur líka 0 þannig hvert 250-sta tick (millisek með 1/64 prescaler)
+
+    loop1_cnt = 0;
+    loop2_cnt = 0;
+    loop1 = false;
+    loop2 = false;
+
 }
 
 uint32_t time_ms() {
@@ -60,9 +66,9 @@ uint32_t time_mus() {
 }
 
 void set_loop_ms(uint8_t loop1_arg, uint16_t loop2_arg) {
-    loop1_ms = loop1_arg;
     uint8_t oldSREG = SREG;
     cli(); // disable interrupts
+    loop1_ms = loop1_arg;
     loop2_ms = loop2_arg;
     SREG = oldSREG;
 }
