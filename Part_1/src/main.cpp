@@ -11,6 +11,8 @@
 #include <Initialization.h>
 #include <Operational.h>
 #include <State.h>
+#include "Fault_handling.h"
+#include "StopState.h"
 
 Initialization init_state;
 Operational operational_state;
@@ -28,16 +30,16 @@ ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder 
 }
 
 int main() {
-
-
-  sei();
-
   Context ctx(&init_state);
   motor_state = &ctx;
+  sei();
 
   while (1) {
     if (loop1 == true) {}
     if (loop2 == true) {}
+    if (check_fault()) {
+      motor_state->transition_to(&stop_state);
+    }
 
   char c=0;
 
