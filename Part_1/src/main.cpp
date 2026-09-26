@@ -27,7 +27,7 @@ Digital_out led(D13);
 P_controller Pctrl(20);
 PI_controller PIctrl(3.2,2.4);
 controller* ctrl = &Pctrl;
-int16_t target_speed = -5000; 
+int16_t target_speed = -5000;  // Target speed = rpm*100
 
 bool put_reset, put_operate;
 
@@ -51,6 +51,7 @@ int main() {
 
   if (serial_available()) {
       c = serial_read();
+      serial_print("\r\n");
       serial_print("I received: ");
       serial_print_char(c);
       serial_print("\r\n");
