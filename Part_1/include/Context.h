@@ -21,5 +21,7 @@ public:
 
   void on_pre_operate();
 
+  void on_fault();
+
 
 };

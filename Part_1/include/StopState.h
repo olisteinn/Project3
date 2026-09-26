@@ -10,6 +10,7 @@ public:
   void reset() override;
   void on_operate() override;
   void on_pre_operate() override;
+  void on_fault() override;
 };
 
 extern StopState stop_state;

@@ -1,4 +1,4 @@
-#include <uart.h>
+#include "uart.h"
 #include <Initialization.h>
 #include <Operational.h>
 #include <Context.h>
@@ -51,6 +51,10 @@ void Initialization::on_operate()
 void Initialization::on_pre_operate()
 {
 
+}
+
+void Initialization::on_fault()
+{
 }
 
 

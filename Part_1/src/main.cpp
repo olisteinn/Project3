@@ -11,12 +11,13 @@
 #include <uart.h>
 #include <Initialization.h>
 #include <Operational.h>
-#include <State.h>
+#include "State.h"
 #include "Fault_handling.h"
 #include "StopState.h"
 
 Initialization init_state;
 Operational operational_state;
+StopState stop_state;
 Context *motor_state;
 
 Encoder motor(D2,D4,D7); // encoder driver, (encoder in 1, encoder in 2, signal read out)
@@ -31,6 +32,8 @@ int16_t target_speed = -5000;  // Target speed = rpm*100
 
 bool put_reset, put_operate;
 
+
+
 ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder class
   motor.update(); // reads position and timestamps on encoder in pin interrupt
 }
@@ -43,9 +46,6 @@ int main() {
   while (1) {
     if (loop1 == true) {}
     if (loop2 == true) {}
-    if (check_fault()) {
-      motor_state->transition_to(&stop_state);
-    }
 
   char c=0;
 
@@ -72,6 +72,10 @@ int main() {
     motor_state->reset();
   if (put_operate)
     motor_state->on_operate();
+  }
+  if (check_fault())
+  {
+    motor_state->on_fault();
   }
   
 

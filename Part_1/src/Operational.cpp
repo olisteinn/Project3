@@ -10,6 +10,7 @@
 #include "encoder.h"
 #include "controller.h"
 #include "timer.h"
+#include "StopState.h"
 
 extern Digital_out led;
 extern Drive bridge;
@@ -66,4 +67,9 @@ void Operational::on_operate()
 void Operational::on_pre_operate()
 {
 
+}
+
+void Operational::on_fault()
+{
+    this->context_->transition_to(&stop_state);
 }
