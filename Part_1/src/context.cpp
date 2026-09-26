@@ -1,4 +1,4 @@
-#include "context.h"
+#include "Context.h"
 #include "State.h"
 
 Context::Context(State *state) : state_(nullptr)
@@ -6,17 +6,11 @@ Context::Context(State *state) : state_(nullptr)
   this->transition_to(state);
 }
 
-Context::~Context()
-{
-  delete state_;
-}
-
 void Context::transition_to(State *state)
 {
   if (this->state_ != nullptr)
   {
     this->state_->on_exit();
-    delete this->state_;
   }
 
   this->state_ = state;
@@ -29,5 +23,15 @@ void Context::transition_to(State *state)
 void Context::do_work()
 {
   this->state_->on_do();
+}
+
+void Context::on_init()
+{
+  this->state_->on_init();
+}
+
+void Context::on_operate()
+{
+  this->state_->on_operate();
 }
 

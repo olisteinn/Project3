@@ -15,4 +15,9 @@ public:
 
   void do_work();
 
+  void on_init();
+
+  void on_operate();
+
+
 };

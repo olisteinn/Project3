@@ -11,9 +11,6 @@ protected:
   Context *context_;
 
 public:
-  virtual ~State()
-  {
-  }
 
   void set_context(Context *context)
   {
@@ -25,6 +22,10 @@ public:
   virtual void on_entry() = 0;
 
   virtual void on_exit() = 0;
+
+  virtual void on_init() = 0;
+
+  virtual void on_operate() = 0;
 
 
 }; 
