@@ -22,7 +22,6 @@ void StopState::on_do()
 
 void StopState::on_entry()
 {
-    bridge.stop();
     serial_println("Stopped");
     led_ms = time_ms();
 }
