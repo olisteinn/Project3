@@ -6,9 +6,6 @@
 Encoder::Encoder(int pin1, int pin2, int pin_out) 
   : P1(pin1), P2(pin2), Pout(pin_out) 
 {
-    counter = 0;
-    ext_counter = 0;
-    dir = true;
 }
 
 void Encoder::init() {
@@ -16,6 +13,12 @@ void Encoder::init() {
     P2.init();
     Pout.init();
     P1prevstate = P1.is_hi();
+    
+    counter = 0;
+    ext_counter = 0;
+    dir = true;
+    rpm = 0;
+    history_head = 0;
 }
 
 void Encoder::update() {
