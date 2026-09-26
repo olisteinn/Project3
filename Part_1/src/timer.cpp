@@ -3,7 +3,7 @@
 #include <avr/interrupt.h>
 #include <stdint.h>
 
-volatile uint32_t ms = 0;
+volatile uint32_t ms;
 
 volatile bool loop1 = false;
 volatile bool loop2 = false;
@@ -13,6 +13,8 @@ uint16_t loop2_ms=0;
 uint16_t loop2_cnt=0;
 
 void time_init() {
+    cli();
+    ms = 0;
     TCCR1A = 0; // Timer 1 control register A (set to 0)
     TCCR1B = 0; // T1 control register B
     TCNT1 = 0; // T1 counter = 0 
@@ -58,9 +60,11 @@ uint32_t time_mus() {
 }
 
 void set_loop_ms(uint8_t loop1_arg, uint16_t loop2_arg) {
-    cli(); // disable interrupts
     loop1_ms = loop1_arg;
+    uint8_t oldSREG = SREG;
+    cli(); // disable interrupts
     loop2_ms = loop2_arg;
+    SREG = oldSREG;
 }
 
 ISR(TIMER1_COMPA_vect) { // Keyrir þegar TCNT1 == OCR1A, COMPB væri TCNT1 == OCR1B
