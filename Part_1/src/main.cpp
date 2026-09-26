@@ -23,6 +23,9 @@ Drive bridge(0,D8); // motor driver, (timer circuit no., slp pin)
 
 Digital_out led(D13);
 
+P_controller Pctrl(5.5);
+controller* ctrl = &Pctrl; 
+
 bool put_reset, put_operate;
 
 ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder class
@@ -30,9 +33,12 @@ ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder 
 }
 
 int main() {
+  serial_init();
   Context ctx(&init_state);
   motor_state = &ctx;
-  serial_init();
+
+  int16_t target_speed = -10000;
+  int16_t ctrlOP = 0;
 
   while (1) {
     if (loop1 == true) {}
