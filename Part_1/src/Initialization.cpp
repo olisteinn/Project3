@@ -26,7 +26,7 @@ void Initialization::on_entry()
   time_init(); // initalize timer 1 for time tracking use
   motor.init();  // initalize encoder
   bridge.init();  // initalize motor driver
-  set_loop_ms(5,20); // sets loop durations in ms, one for controller loop other for serial print
+  set_loop_ms(5,250); // sets loop durations in ms, one for controller loop other for serial print
   led.init();
   sei();
   serial_println("Initialization complete");

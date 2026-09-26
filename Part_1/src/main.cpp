@@ -6,6 +6,7 @@
 #include "encoder.h"
 #include "drive.h"
 #include "P_controller.h"
+#include "PI_controller.h"
 #include <Context.h>
 #include <uart.h>
 #include <Initialization.h>
@@ -23,8 +24,10 @@ Drive bridge(0,D8); // motor driver, (timer circuit no., slp pin)
 
 Digital_out led(D13);
 
-P_controller Pctrl(5.5);
-controller* ctrl = &Pctrl; 
+P_controller Pctrl(20);
+PI_controller PIctrl(3.2,2.4);
+controller* ctrl = &Pctrl;
+int16_t target_speed = -5000; 
 
 bool put_reset, put_operate;
 
@@ -36,9 +39,6 @@ int main() {
   serial_init();
   Context ctx(&init_state);
   motor_state = &ctx;
-
-  int16_t target_speed = -10000;
-  int16_t ctrlOP = 0;
 
   while (1) {
     if (loop1 == true) {}
