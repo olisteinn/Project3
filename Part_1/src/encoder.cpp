@@ -2,6 +2,7 @@
 #include "timer.h"
 #include <avr/interrupt.h>
 #include <stdint.h>
+#include <string.h>
 
 Encoder::Encoder(int pin1, int pin2, int pin_out) 
   : P1(pin1), P2(pin2), Pout(pin_out) 
@@ -19,6 +20,7 @@ void Encoder::init() {
     dir = true;
     rpm = 0;
     history_head = 0;
+    memset(enc_memory, 0, sizeof(enc_memory));
 }
 
 void Encoder::update() {
