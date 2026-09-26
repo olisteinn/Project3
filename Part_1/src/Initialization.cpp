@@ -2,14 +2,29 @@
 #include <Initialization.h>
 #include <Operational.h>
 #include <Context.h>
+#include "encoder.h"
+#include "drive.h"
+#include "digital_out.h"
+#include "timer.h"
 
+extern Encoder motor;
+extern Drive bridge;
+
+extern Digital_out led;
 
 void Initialization::on_do()
 {
+
 }
 
 void Initialization::on_entry()
 {
+  serial_init();
+  time_init(); // initalize timer 1 for time tracking use
+  motor.init();  // initalize encoder
+  bridge.init();  // initalize motor driver
+  set_loop_ms(5,20); // sets loop durations in ms, one for controller loop other for serial print
+  led.init();
   serial_println("Initialization");
 }
 
