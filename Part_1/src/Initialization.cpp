@@ -7,6 +7,7 @@
 #include "digital_out.h"
 #include "timer.h"
 #include <avr/interrupt.h>
+#include "Fault_handling.h"
 
 
 extern Encoder motor;
@@ -28,6 +29,7 @@ void Initialization::on_entry()
   bridge.init();  // initalize motor driver
   set_loop_ms(5,250); // sets loop durations in ms, one for controller loop other for serial print
   led.init();
+  initFaultPin();
   sei();
   serial_println("Initialization complete");
 }

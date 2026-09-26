@@ -6,6 +6,7 @@
 #include "digital_out.h"      
 #include "uart.h"
 
+
 extern Drive bridge;
 extern Digital_out led;
 
@@ -16,6 +17,7 @@ void StopState::on_do()
 
 void StopState::on_entry()
 {
+    bridge.stop();
     serial_println("Stopped");
 }
 

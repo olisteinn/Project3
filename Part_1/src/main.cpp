@@ -72,9 +72,7 @@ int main() {
     motor_state->reset();
   if (put_operate)
     motor_state->on_operate();
-  }
   if (check_fault())
-  {
     motor_state->on_fault();
   }
   
