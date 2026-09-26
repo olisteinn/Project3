@@ -19,7 +19,7 @@ Context *motor_state;
 Encoder motor(D2,D4,D7); // encoder driver, (encoder in 1, encoder in 2, signal read out)
 Drive bridge(0,D8); // motor driver, (timer circuit no., slp pin)
 
-bool put_init, put_operate;
+bool reset, put_operate;
 
 ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder class
   motor.update(); // reads position and timestamps on encoder in pin interrupt
@@ -49,10 +49,10 @@ int main() {
       serial_print_char(c);
       serial_print("\r\n");
 }
-  put_init = put_operate = false;
+  reset = put_operate = false;
 
-  if (c=='i'){
-    put_init = true;
+  if (c=='r'){
+    reset = true;
   }
   if (c=='o'){
     put_operate = true;
@@ -61,11 +61,12 @@ int main() {
 
   motor_state->do_work();
   
-  if (put_init)
-    motor_state->on_init();
+  if (reset)
+    motor_state->reset();
   if (put_operate)
     motor_state->on_operate();
   }
+  
 
   bridge.sleep(); // sets pwm to 0 and slp pin low
   return 0;

@@ -15,7 +15,7 @@ public:
 
   void do_work();
 
-  void on_init();
+  void reset();
 
   void on_operate();
 

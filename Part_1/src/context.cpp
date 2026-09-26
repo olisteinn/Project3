@@ -25,9 +25,9 @@ void Context::do_work()
   this->state_->on_do();
 }
 
-void Context::on_init()
+void Context::reset()
 {
-  this->state_->on_init();
+  this->state_->reset();
 }
 
 void Context::on_operate()
