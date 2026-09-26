@@ -18,7 +18,7 @@ void Operational::on_exit()
   serial_print("Operational -> ");
 }
 
-void Operational::on_init()
+void Operational::reset()
 {
   this->context_->transition_to(&init_state);
 }

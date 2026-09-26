@@ -18,7 +18,7 @@ void Initialization::on_exit()
   serial_print("Initialization -> ");
 }
 
-void Initialization::on_init()
+void Initialization::reset()
 {
 
 }

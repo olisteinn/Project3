@@ -8,7 +8,7 @@ public:
   void on_entry() override;
   void on_exit() override;
 
-  void on_init() override;
+  void reset() override;
   void on_operate() override;
 };
 
