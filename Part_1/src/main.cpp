@@ -14,10 +14,12 @@
 #include "State.h"
 #include "Fault_handling.h"
 #include "StopState.h"
+#include "PreOperational.h"
 
 Initialization init_state;
 Operational operational_state;
 StopState stop_state;
+PreOperational pre_op_state;
 Context *motor_state;
 
 Encoder motor(D2,D4,D7); // encoder driver, (encoder in 1, encoder in 2, signal read out)
@@ -30,7 +32,6 @@ PI_controller PIctrl(3.2,2.4);
 controller* ctrl = &Pctrl;
 int16_t target_speed = -5000;  // Target speed = rpm*100
 
-bool put_reset, put_operate;
 
 
 
@@ -56,22 +57,18 @@ int main() {
       serial_print_char(c);
       serial_print("\r\n");
 }
-  put_reset = put_operate = false;
-
-  if (c=='r'){
-    put_reset = true;
-  }
-  if (c=='o'){
-    put_operate = true;
-  }
 
 
   motor_state->do_work();
-  
-  if (put_reset)
-    motor_state->reset();
-  if (put_operate)
+  if (c=='r'){
+    motor_state->reset();;
+  }
+  if (c=='o'){
     motor_state->on_operate();
+  }
+  if (c == 'p'){
+    motor_state->on_pre_operate();
+  }
   if (check_fault())
     motor_state->on_fault();
   }

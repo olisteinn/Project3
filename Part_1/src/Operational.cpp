@@ -11,6 +11,7 @@
 #include "controller.h"
 #include "timer.h"
 #include "StopState.h"
+#include "PreOperational.h"
 
 extern Digital_out led;
 extern Drive bridge;
@@ -66,7 +67,7 @@ void Operational::on_operate()
 
 void Operational::on_pre_operate()
 {
-
+  this->context_->transition_to(&pre_op_state);
 }
 
 void Operational::on_fault()

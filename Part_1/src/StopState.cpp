@@ -7,10 +7,11 @@
 #include "uart.h"
 #include "timer.h"
 #include <stdint.h>
+#include "PreOperational.h"
 
 extern Drive bridge;
 extern Digital_out led;
-uint32_t led_ms;
+static uint32_t led_ms;
 
 void StopState::on_do()
 {
@@ -28,6 +29,7 @@ void StopState::on_entry()
 
 void StopState::on_exit()
 {
+    led.set_lo();
     serial_print("Stopped -> ");
 }
 
@@ -43,6 +45,7 @@ void StopState::on_operate()
 
 void StopState::on_pre_operate()
 {
+    this->context_->transition_to(&pre_op_state);
 }
 
 void StopState::on_fault()

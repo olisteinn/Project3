@@ -8,6 +8,7 @@
 #include "timer.h"
 #include <avr/interrupt.h>
 #include "Fault_handling.h"
+#include "PreOperational.h"
 
 
 extern Encoder motor;
@@ -32,6 +33,7 @@ void Initialization::on_entry()
   initFaultPin();
   sei();
   serial_println("Initialization complete");
+  this->context_->transition_to(&pre_op_state);
 }
 
 void Initialization::on_exit()
@@ -47,7 +49,7 @@ void Initialization::reset()
 
 void Initialization::on_operate()
 {
-  this->context_->transition_to(&operational_state);
+  
 }
 
 void Initialization::on_pre_operate()
