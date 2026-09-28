@@ -31,11 +31,14 @@ Drive bridge(0,D8); // motor driver, (timer circuit no., slp pin)
 
 Digital_out led(D13);
 
-double Kp_inp = 1;
-double Ti_inp = 1;
+
+double Kp_init = 1;
+double Ti_init = 1;
+double Kp_inp = Kp_init;
+double Ti_inp = Ti_init;
 int16_t target_speed = -5000;  // Target speed = rpm*100
-P_controller Pctrl(Kp_inp);
-PI_controller PIctrl(Kp_inp,Ti_inp);
+P_controller Pctrl(Kp_init);
+PI_controller PIctrl(Kp_init,Ti_init);
 controller* ctrl = &Pctrl;
 
 ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder class
@@ -58,6 +61,12 @@ int main() {
       serial_print("I received: ");
       serial_print(c);
       serial_print("\r\n");
+
+      if (check_fault())
+      {
+        motor_state->on_fault();
+      }
+        
       if (c[0] == 'r' && c[1] == '\0') {
         motor_state->reset();
       } else if (c[0] == 'o' && c[1] == '\0') {

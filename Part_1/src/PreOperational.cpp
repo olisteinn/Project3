@@ -77,7 +77,7 @@ void PreOperational::controller_selector(char* inp)
     if (inp[1] == '\0') {
       ctrl = &Pctrl;
       serial_println("P controller selected");
-    } else if (inp[1] == 'I' || inp[2] == '\0') {
+    } else if (inp[1] == 'I' && inp[2] == '\0') {
       ctrl = &PIctrl;
       serial_println("PI controller selected");
     }

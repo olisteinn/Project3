@@ -9,12 +9,19 @@
 #include <avr/interrupt.h>
 #include "Fault_handling.h"
 #include "PreOperational.h"
+#include "P_controller.h"
+#include "PI_controller.h"
 
 
 extern Encoder motor;
 extern Drive bridge;
 
 extern Digital_out led;
+
+extern double Kp_init;
+extern double Ti_init;
+extern P_controller Pctrl;
+extern PI_controller PIctrl;
 
 void Initialization::on_do()
 {
@@ -31,6 +38,10 @@ void Initialization::on_entry()
   set_loop_ms(5,250); // sets loop durations in ms, one for controller loop other for serial print
   led.init();
   initFaultPin();
+  
+  P_controller Pctrl(Kp_init);
+  PI_controller PIctrl(Kp_init,Ti_init);
+
   sei();
   serial_println("Initialization complete");
   this->context_->transition_to(&pre_op_state);
