@@ -74,3 +74,10 @@ void serial_read_string(char* buffer, uint8_t max_length) {
     // Always add a null terminator so C knows where the string ends
     buffer[index] = '\0'; 
 }
+
+void serial_flush() {
+    // Keep reading and throwing away characters as long as there is unread data
+    while (UCSR0A & (1 << RXC0)) {
+        char dummy = UDR0; 
+    }
+}

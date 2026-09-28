@@ -40,6 +40,8 @@ void PreOperational::on_entry()
   serial_println("Pre Operational");
   bridge.stop();
   led_ms = time_ms();
+  serial_println("Select controller type with ""P"" or ""PI""");
+  serial_println("Set controller parameters with ""Kp"" ""Ti"" ");
 }
 
 void PreOperational::on_exit()
@@ -85,21 +87,25 @@ void PreOperational::controller_selector(char* inp)
 void PreOperational::set_parameters(char* inp)
 {
   if (inp[0] == 'K' && inp[1] == 'p' && inp[2] == '\0') {
+    serial_flush();
     serial_print("Enter a value for Kp: ");
     char Kp_str[7];
     serial_read_string(Kp_str,7);
     Kp_inp = atof(Kp_str);
     Pctrl = P_controller(Kp_inp);
     PIctrl = PI_controller(Kp_inp,Ti_inp);
-    serial_println("\nParameters set");
+    serial_print("\nKp set to: ");
+    serial_println(Kp_str);
   } else if (inp[0] == 'T' && inp[1] == 'i' && inp[2] == '\0') {
+    serial_flush();
     serial_print("Enter a value for Ti: ");
     char Ti_str[7];
     serial_read_string(Ti_str,7);
     Ti_inp = atof(Ti_str);
     Pctrl = P_controller(Kp_inp);
     PIctrl = PI_controller(Kp_inp,Ti_inp);
-    serial_println("\nParameters set");
+    serial_print("\nTi set to: ");
+    serial_println(Ti_str);
   }
 }
 

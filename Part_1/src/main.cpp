@@ -53,25 +53,27 @@ int main() {
     if (loop2 == true) {}
 
     if (serial_available()) {
-        serial_read_string(c,10);
-        serial_print("\r\n");
-        serial_print("I received: ");
-        serial_print(c);
-        serial_print("\r\n");
-        if (c[0] == 'r' && c[1] == '\0') {
-          motor_state->reset();
-        } else if (c[0] == 'o' && c[1] == '\0') {
-          motor_state->on_operate();
-        } else if (c[0] == 'p' && c[1] == '\0') {
-          motor_state->on_pre_operate();
-        } else if (motor_state->get_state() == &pre_op_state) {
-          if (c[0] == 'P') {
-            motor_state->controller_selector(c);
-          } else {
-            motor_state->set_parameters(c);
-          }
+      serial_read_string(c,10);
+      serial_print("\r\n");
+      serial_print("I received: ");
+      serial_print(c);
+      serial_print("\r\n");
+      if (c[0] == 'r' && c[1] == '\0') {
+        motor_state->reset();
+      } else if (c[0] == 'o' && c[1] == '\0') {
+        motor_state->on_operate();
+      } else if (c[0] == 'p' && c[1] == '\0') {
+        motor_state->on_pre_operate();
+      } else if (c[0] == 's' && c[1] == '\0') {
+        motor_state->on_fault();
+      } else if (motor_state->get_state() == &pre_op_state) {
+        if (c[0] == 'P') {
+          motor_state->controller_selector(c);
+        } else {
+          motor_state->set_parameters(c);
         }
-        
+      }
+      serial_flush();
     }
     motor_state->do_work();
     
