@@ -12,6 +12,9 @@ public:
   void on_operate() override;
   void on_pre_operate() override;
   void on_fault() override;
+  void controller_selector(uint8_t type) override;
+
+  int ctrl_type;
 };
 
 extern PreOperational pre_op_state;

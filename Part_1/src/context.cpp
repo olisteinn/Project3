@@ -44,3 +44,8 @@ void Context::on_fault()
 {
   this->state_->on_fault();
 }
+
+void Context::controller_selector(uint8_t type)
+{
+  this->state_->controller_selector(type);
+}

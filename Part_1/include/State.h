@@ -1,4 +1,5 @@
 #pragma once
+#include <stdint.h>
 
 class Context;
 class State
@@ -30,6 +31,8 @@ public:
   virtual void on_pre_operate() = 0;
 
   virtual void on_fault() = 0;
+
+  virtual void controller_selector(uint8_t type) {};
 
 
 }; 

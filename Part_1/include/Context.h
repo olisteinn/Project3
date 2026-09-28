@@ -23,5 +23,6 @@ public:
 
   void on_fault();
 
+  void controller_selector(uint8_t type);
 
 };

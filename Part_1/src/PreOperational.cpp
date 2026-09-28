@@ -10,10 +10,18 @@
 #include "Fault_handling.h"
 #include "PreOperational.h"
 #include "StopState.h"
+#include "controller.h"
+#include "P_controller.h"
+#include "PI_controller.h"
+
 
 extern Drive bridge;
 extern Digital_out led;
 static uint32_t led_ms;
+
+extern controller* ctrl;
+extern P_controller Pctrl;
+extern PI_controller PIctrl;
 
 void PreOperational::on_do()
 {
@@ -55,6 +63,17 @@ void PreOperational::on_fault()
 {
     this->context_->transition_to(&stop_state);
 
+}
+
+void PreOperational::controller_selector(uint8_t type)
+{
+  if (type == 1) {
+    ctrl = &Pctrl;
+    serial_println("P controller selected");
+  } else if (type == 2) {
+    ctrl = &PIctrl;
+    serial_println("PI controller selected");
+  }
 }
 
 
