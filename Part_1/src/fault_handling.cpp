@@ -12,6 +12,9 @@ void initFaultPin() {
     PORTD |= (1 << PORTD3);
     EICRA = (EICRA & ~((1 << ISC11) | (1 << ISC10))) | (1 << ISC11);
     EIMSK |= (1 << INT1);
+    if (!(PIND & (1 << PIND3))) {
+        faultFlag = true;
+    }
 }
 
 bool check_fault(){
