@@ -32,8 +32,8 @@ public:
 
   virtual void on_fault() = 0;
 
-  virtual void controller_selector(uint8_t type) {};
+  virtual void controller_selector(char* inp) {};
 
-  virtual void set_parameters(double Kp, double Ti) {};
+  virtual void set_parameters(char* inp) {};
 
 }; 

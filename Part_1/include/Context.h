@@ -23,9 +23,9 @@ public:
 
   void on_fault();
 
-  void controller_selector(uint8_t type);
+  void controller_selector(char* inp);
 
-  void set_parameters(double Kp, double Ti);
+  void set_parameters(char* inp);
 
   State *get_state() const; 
 

@@ -53,7 +53,6 @@ int main() {
     if (loop2 == true) {}
 
     if (serial_available()) {
-        bool set_param = false;
         serial_read_string(c,10);
         serial_print("\r\n");
         serial_print("I received: ");

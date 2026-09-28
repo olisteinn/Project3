@@ -13,9 +13,7 @@ public:
   void on_pre_operate() override;
   void on_fault() override;
   void controller_selector(char* inp) override;
-  void set_parameters(double Kp, double Ti) override;
-
-  int ctrl_type;
+  void set_parameters(char* inp) override;
 };
 
 extern PreOperational pre_op_state;

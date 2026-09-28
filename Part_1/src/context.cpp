@@ -45,14 +45,14 @@ void Context::on_fault()
   this->state_->on_fault();
 }
 
-void Context::controller_selector(uint8_t type)
+void Context::controller_selector(char* inp)
 {
-  this->state_->controller_selector(type);
+  this->state_->controller_selector(inp);
 }
 
-void Context::set_parameters(double Kp, double Ti)
+void Context::set_parameters(char* inp)
 {
-  this->state_->set_parameters(Kp, Ti);
+  this->state_->set_parameters(inp);
 }
 
 State *Context::get_state() const
