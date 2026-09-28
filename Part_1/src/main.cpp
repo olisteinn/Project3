@@ -32,11 +32,11 @@ Drive bridge(0,D8); // motor driver, (timer circuit no., slp pin)
 Digital_out led(D13);
 
 
-double Kp_init = 1;
-double Ti_init = 1;
+double Kp_init = 7.39; // 8.21 fyrir P controller, 7.39 fyrir PI
+double Ti_init = 0.08517; // 85.17 fyrir PI
 double Kp_inp = Kp_init;
 double Ti_inp = Ti_init;
-int16_t target_speed = -5000;  // Target speed = rpm*100
+int16_t target_speed = 5000;  // Target speed = rpm*100
 P_controller Pctrl(Kp_init);
 PI_controller PIctrl(Kp_init,Ti_init);
 controller* ctrl = &Pctrl;
