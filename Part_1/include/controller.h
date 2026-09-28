@@ -4,5 +4,4 @@
 class controller {
     public:
         virtual int16_t update(int16_t ref, int16_t actual) = 0;
-        virtual void set_params(double Kp, double Ti) = 0;
 };
