@@ -76,4 +76,14 @@ void PreOperational::controller_selector(uint8_t type)
   }
 }
 
+void PreOperational::set_parameters(double Kp, double Ti)
+{
+  if (Kp <= 0 || Kp >= 127 || Ti <= 0) {
+    serial_println("Invalid: need 0 < Kp < 127 and Ti > 0"); // Kp overflowar fyrir ofan 127
+    return;
+  }
+  ctrl->set_params(Kp, Ti);
+  serial_println("Parameters set");
+}
+
 

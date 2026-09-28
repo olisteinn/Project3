@@ -16,3 +16,8 @@ int16_t P_controller::update(int16_t ref, int16_t actual) {
         return Kpe;
     }
 }
+
+void P_controller::set_params(double Kp_arg, double Ti)
+{
+    Kp = Kp_arg * 256;          // Ti not used by a P controller
+}

@@ -8,4 +8,5 @@ class P_controller : public controller {
     public:
         P_controller(double Kp_arg);
         int16_t update(int16_t ref,int16_t actual);
+        void set_params(double Kp_arg, double Ti) override;
 };

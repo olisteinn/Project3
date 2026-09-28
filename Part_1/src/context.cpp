@@ -49,3 +49,8 @@ void Context::controller_selector(uint8_t type)
 {
   this->state_->controller_selector(type);
 }
+
+void Context::set_parameters(double Kp, double Ti)
+{
+  this->state_->set_parameters(Kp, Ti);
+}

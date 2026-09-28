@@ -35,3 +35,11 @@ int16_t PI_controller::update(int16_t ref, int16_t actual) {
         return total;
     }
 }
+
+void PI_controller::set_params(double Kp_arg, double Ti)
+{
+    Kp  = 256 * Kp_arg;
+    Ki  = 256 * Kp_arg / Ti;
+    KiE = 0;
+    last_time = time_mus();
+}

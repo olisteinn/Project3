@@ -24,5 +24,7 @@ public:
   void on_fault();
 
   void controller_selector(uint8_t type);
+  
+  void set_parameters(double Kp, double Ti);
 
 };

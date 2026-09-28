@@ -34,5 +34,6 @@ public:
 
   virtual void controller_selector(uint8_t type) {};
 
+  virtual void set_parameters(double Kp, double Ti) {};
 
 }; 
