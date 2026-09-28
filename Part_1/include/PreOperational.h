@@ -12,7 +12,7 @@ public:
   void on_operate() override;
   void on_pre_operate() override;
   void on_fault() override;
-  void controller_selector(uint8_t type) override;
+  void controller_selector(char* inp) override;
   void set_parameters(double Kp, double Ti) override;
 
   int ctrl_type;
