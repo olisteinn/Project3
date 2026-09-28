@@ -22,6 +22,9 @@ extern double Kp_init;
 extern double Ti_init;
 extern P_controller Pctrl;
 extern PI_controller PIctrl;
+extern double Kp_inp;
+extern double Ti_inp;
+extern controller* ctrl;
 
 void Initialization::on_do()
 {
@@ -38,9 +41,12 @@ void Initialization::on_entry()
   set_loop_ms(5,250); // sets loop durations in ms, one for controller loop other for serial print
   led.init();
   initFaultPin();
-  
-  P_controller Pctrl(Kp_init);
-  PI_controller PIctrl(Kp_init,Ti_init);
+
+  Pctrl  = P_controller(Kp_init);
+  PIctrl = PI_controller(Kp_init, Ti_init);
+  Kp_inp = Kp_init;          
+  Ti_inp = Ti_init;
+  ctrl   = &Pctrl;           
 
   sei();
   serial_println("Initialization complete");
