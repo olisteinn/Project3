@@ -31,8 +31,8 @@ Drive bridge(0,D8); // motor driver, (timer circuit no., slp pin)
 
 Digital_out led(D13);
 
-volatile double Kp_inp = 1;
-volatile double Ti_inp = 1;
+double Kp_inp = 1;
+double Ti_inp = 1;
 int16_t target_speed = -5000;  // Target speed = rpm*100
 P_controller Pctrl(Kp_inp);
 PI_controller PIctrl(Kp_inp,Ti_inp);
@@ -46,30 +46,39 @@ int main() {
   serial_init();
   Context ctx(&init_state);
   motor_state = &ctx;
-  c char[10];
+  char c[10];
 
   while (1) {
     if (loop1 == true) {}
     if (loop2 == true) {}
 
-    
-
     if (serial_available()) {
-        c = serial_read();
+        serial_read_string(c,10);
         serial_print("\r\n");
         serial_print("I received: ");
-        serial_print_char(c);
+        serial_print(c);
         serial_print("\r\n");
     }
     motor_state->do_work();
-    if (c=='r')
-      motor_state->reset();;
-    if (c=='o')
-      motor_state->on_operate();
-    if (c == 'p')
-      motor_state->on_pre_operate();
-    if (check_fault())
-      motor_state->on_fault();
+    if (c[0] == 'r' && c[1] == '\0') {
+        motor_state->reset();
+    } else if (c[0] == 'o' && c[1] == '\0') {
+        motor_state->on_operate();
+    } else if (c[0] == 'p' && c[1] == '\0') {
+        motor_state->on_pre_operate();
+    } else if (c[0] == 'P' && c[1] == '\0') {
+      controller* ctrl = &Pctrl;
+    } else if (c[0] == 'P' && c[1] == 'I' && c[2] == '\0') {
+      controller* ctrl = &PIctrl;
+    } else if (c[0] == 'K' && c[1] == 'p' && c[2] == '\0') {
+      char Kp_str[7];
+      serial_read_string(Kp_str,7);
+      Kp_inp = atof(Kp_str);
+    } else if (c[0] == 'T' && c[1] == 'i' && c[2] == '\0') {
+      char Ti_str[7];
+      serial_read_string(Ti_str,7);
+      Ti_inp = atof(Ti_str);
+    }
   }
   
 
