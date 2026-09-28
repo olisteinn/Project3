@@ -62,10 +62,6 @@ int main() {
       serial_print(c);
       serial_print("\r\n");
 
-      if (check_fault())
-      {
-        motor_state->on_fault();
-      }
         
       if (c[0] == 'r' && c[1] == '\0') {
         motor_state->reset();
@@ -84,6 +80,11 @@ int main() {
       }
       serial_flush();
     }
+
+    if (check_fault())
+      {
+        motor_state->on_fault();
+      }
     motor_state->do_work();
     
   }
