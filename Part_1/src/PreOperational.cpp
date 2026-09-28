@@ -2,6 +2,7 @@
 #include <Initialization.h>
 #include <Operational.h>
 #include <Context.h>
+#include <stdlib.h>
 #include "encoder.h"
 #include "drive.h"
 #include "digital_out.h"
@@ -22,6 +23,9 @@ static uint32_t led_ms;
 extern controller* ctrl;
 extern P_controller Pctrl;
 extern PI_controller PIctrl;
+
+extern double Kp_inp;
+extern double Ti_inp;
 
 void PreOperational::on_do()
 {
@@ -65,25 +69,38 @@ void PreOperational::on_fault()
 
 }
 
-void PreOperational::controller_selector(uint8_t type)
+void PreOperational::controller_selector(char* inp)
 {
-  if (type == 1) {
-    ctrl = &Pctrl;
-    serial_println("P controller selected");
-  } else if (type == 2) {
-    ctrl = &PIctrl;
-    serial_println("PI controller selected");
+  if (inp[0] == 'P') {
+    if (inp[1] == '\0') {
+      ctrl = &Pctrl;
+      serial_println("P controller selected");
+    } else if (inp[1] == 'I' || inp[2] == '\0') {
+      ctrl = &PIctrl;
+      serial_println("PI controller selected");
+    }
   }
 }
 
-void PreOperational::set_parameters(double Kp, double Ti)
+void PreOperational::set_parameters(char* inp)
 {
-  if (Kp <= 0 || Kp >= 127 || Ti <= 0) {
-    serial_println("Invalid: need 0 < Kp < 127 and Ti > 0"); // Kp overflowar fyrir ofan 127
-    return;
+  if (inp[0] == 'K' && inp[1] == 'p' && inp[2] == '\0') {
+    serial_print("Enter a value for Kp: ");
+    char Kp_str[7];
+    serial_read_string(Kp_str,7);
+    Kp_inp = atof(Kp_str);
+    Pctrl = P_controller(Kp_inp);
+    PIctrl = PI_controller(Kp_inp,Ti_inp);
+    serial_println("\nParameters set");
+  } else if (inp[0] == 'T' && inp[1] == 'i' && inp[2] == '\0') {
+    serial_print("Enter a value for Ti: ");
+    char Ti_str[7];
+    serial_read_string(Ti_str,7);
+    Ti_inp = atof(Ti_str);
+    Pctrl = P_controller(Kp_inp);
+    PIctrl = PI_controller(Kp_inp,Ti_inp);
+    serial_println("\nParameters set");
   }
-  ctrl->set_params(Kp, Ti);
-  serial_println("Parameters set");
 }
 
 

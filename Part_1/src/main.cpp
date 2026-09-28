@@ -51,7 +51,7 @@ int main() {
   while (1) {
     if (loop1 == true) {}
     if (loop2 == true) {}
-    
+
     if (serial_available()) {
         bool set_param = false;
         serial_read_string(c,10);
@@ -65,21 +65,14 @@ int main() {
           motor_state->on_operate();
         } else if (c[0] == 'p' && c[1] == '\0') {
           motor_state->on_pre_operate();
-        } else if (c[0] == 'P' && (c[1] == '\0'|| c[2] == '\0'||)) {
-          motor_state->controller_selector(c);
-        } else if (c[0] == 'K' && c[1] == 'p' && c[2] == '\0') {
-          char Kp_str[7];
-          serial_read_string(Kp_str,7);
-          Kp_inp = atof(Kp_str);
-          set_param = true;
-        } else if (c[0] == 'T' && c[1] == 'i' && c[2] == '\0') {
-          char Ti_str[7];
-          serial_read_string(Ti_str,7);
-          Ti_inp = atof(Ti_str);
-          set_param = true;
+        } else if (motor_state->get_state() == &pre_op_state) {
+          if (c[0] == 'P') {
+            motor_state->controller_selector(c);
+          } else {
+            motor_state->set_parameters(c);
+          }
         }
-        if (set_param == true)
-          motor_state->set_parameters(Kp_inp,Ti_inp);
+        
     }
     motor_state->do_work();
     
