@@ -22,15 +22,20 @@ StopState stop_state;
 PreOperational pre_op_state;
 Context *motor_state;
 
+
+
 Encoder motor(D2,D4,D7); // encoder driver, (encoder in 1, encoder in 2, signal read out)
 Drive bridge(0,D8); // motor driver, (timer circuit no., slp pin)
 
 Digital_out led(D13);
 
-P_controller Pctrl(20);
-PI_controller PIctrl(3.2,2.4);
+volatile double Kp_inp = 1;
+volatile double Ti_inp = 1;
+P_controller Pctrl(Kp_inp);
+PI_controller PIctrl(Kp_inp,Ti_inp);
 controller* ctrl = &Pctrl;
 int16_t target_speed = -5000;  // Target speed = rpm*100
+
 
 
 
