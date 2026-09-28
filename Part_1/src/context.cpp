@@ -54,3 +54,8 @@ void Context::set_parameters(double Kp, double Ti)
 {
   this->state_->set_parameters(Kp, Ti);
 }
+
+State *Context::get_state() const
+{
+  return this->state_;
+}
