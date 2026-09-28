@@ -51,34 +51,38 @@ int main() {
   while (1) {
     if (loop1 == true) {}
     if (loop2 == true) {}
-
+    
     if (serial_available()) {
+        bool set_param = false;
         serial_read_string(c,10);
         serial_print("\r\n");
         serial_print("I received: ");
         serial_print(c);
         serial_print("\r\n");
+        if (c[0] == 'r' && c[1] == '\0') {
+          motor_state->reset();
+        } else if (c[0] == 'o' && c[1] == '\0') {
+          motor_state->on_operate();
+        } else if (c[0] == 'p' && c[1] == '\0') {
+          motor_state->on_pre_operate();
+        } else if (c[0] == 'P' && (c[1] == '\0'|| c[2] == '\0'||)) {
+          motor_state->controller_selector(c);
+        } else if (c[0] == 'K' && c[1] == 'p' && c[2] == '\0') {
+          char Kp_str[7];
+          serial_read_string(Kp_str,7);
+          Kp_inp = atof(Kp_str);
+          set_param = true;
+        } else if (c[0] == 'T' && c[1] == 'i' && c[2] == '\0') {
+          char Ti_str[7];
+          serial_read_string(Ti_str,7);
+          Ti_inp = atof(Ti_str);
+          set_param = true;
+        }
+        if (set_param == true)
+          motor_state->set_parameters(Kp_inp,Ti_inp);
     }
     motor_state->do_work();
-    if (c[0] == 'r' && c[1] == '\0') {
-        motor_state->reset();
-    } else if (c[0] == 'o' && c[1] == '\0') {
-        motor_state->on_operate();
-    } else if (c[0] == 'p' && c[1] == '\0') {
-        motor_state->on_pre_operate();
-    } else if (c[0] == 'P' && c[1] == '\0') {
-      controller* ctrl = &Pctrl;
-    } else if (c[0] == 'P' && c[1] == 'I' && c[2] == '\0') {
-      controller* ctrl = &PIctrl;
-    } else if (c[0] == 'K' && c[1] == 'p' && c[2] == '\0') {
-      char Kp_str[7];
-      serial_read_string(Kp_str,7);
-      Kp_inp = atof(Kp_str);
-    } else if (c[0] == 'T' && c[1] == 'i' && c[2] == '\0') {
-      char Ti_str[7];
-      serial_read_string(Ti_str,7);
-      Ti_inp = atof(Ti_str);
-    }
+    
   }
   
 
