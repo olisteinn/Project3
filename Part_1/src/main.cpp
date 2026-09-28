@@ -1,5 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <stdint.h>
+#include <stdlib.h>
 #include "timer.h"
 #include "digital_in.h"
 #include "digital_out.h"
@@ -7,10 +9,10 @@
 #include "drive.h"
 #include "P_controller.h"
 #include "PI_controller.h"
-#include <Context.h>
-#include <uart.h>
-#include <Initialization.h>
-#include <Operational.h>
+#include "Context.h"
+#include "uart.h"
+#include "Initialization.h"
+#include "Operational.h"
 #include "State.h"
 #include "Fault_handling.h"
 #include "StopState.h"
@@ -31,14 +33,10 @@ Digital_out led(D13);
 
 volatile double Kp_inp = 1;
 volatile double Ti_inp = 1;
+int16_t target_speed = -5000;  // Target speed = rpm*100
 P_controller Pctrl(Kp_inp);
 PI_controller PIctrl(Kp_inp,Ti_inp);
 controller* ctrl = &Pctrl;
-int16_t target_speed = -5000;  // Target speed = rpm*100
-
-
-
-
 
 ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder class
   motor.update(); // reads position and timestamps on encoder in pin interrupt
@@ -48,34 +46,30 @@ int main() {
   serial_init();
   Context ctx(&init_state);
   motor_state = &ctx;
+  c char[10];
 
   while (1) {
     if (loop1 == true) {}
     if (loop2 == true) {}
 
-  char c=0;
+    
 
-  if (serial_available()) {
-      c = serial_read();
-      serial_print("\r\n");
-      serial_print("I received: ");
-      serial_print_char(c);
-      serial_print("\r\n");
-}
-
-
-  motor_state->do_work();
-  if (c=='r'){
-    motor_state->reset();;
-  }
-  if (c=='o'){
-    motor_state->on_operate();
-  }
-  if (c == 'p'){
-    motor_state->on_pre_operate();
-  }
-  if (check_fault())
-    motor_state->on_fault();
+    if (serial_available()) {
+        c = serial_read();
+        serial_print("\r\n");
+        serial_print("I received: ");
+        serial_print_char(c);
+        serial_print("\r\n");
+    }
+    motor_state->do_work();
+    if (c=='r')
+      motor_state->reset();;
+    if (c=='o')
+      motor_state->on_operate();
+    if (c == 'p')
+      motor_state->on_pre_operate();
+    if (check_fault())
+      motor_state->on_fault();
   }
   
 
