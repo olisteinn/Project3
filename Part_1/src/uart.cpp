@@ -51,6 +51,33 @@ uint8_t serial_available(void) {
 }
 
 char serial_read(void) {
-    // Reading UDR0 returns the byte and clears RXC0.
+    // Wait until data is available to be read
+    while (!(UCSR0A & (1 << RXC0))) {
+        // Do nothing until a character arrives
+    }
     return UDR0;
+}
+
+void serial_read_string(char* buffer, uint8_t max_length) {
+    uint8_t index = 0;
+    while (index < max_length - 1) {
+        char c = serial_read();
+        
+        // Stop reading if we hit a newline or carriage return
+        if (c == '\n' || c == '\r') {
+            break; 
+        }
+        
+        buffer[index] = c;
+        index++;
+    }
+    // Always add a null terminator so C knows where the string ends
+    buffer[index] = '\0'; 
+}
+
+void serial_flush() {
+    // Keep reading and throwing away characters as long as there is unread data
+    while (UCSR0A & (1 << RXC0)) {
+        char dummy = UDR0; 
+    }
 }

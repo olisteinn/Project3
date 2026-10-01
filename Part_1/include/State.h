@@ -1,4 +1,5 @@
 #pragma once
+#include <stdint.h>
 
 class Context;
 class State
@@ -31,5 +32,8 @@ public:
 
   virtual void on_fault() = 0;
 
+  virtual void controller_selector(char* inp) {};
+
+  virtual void set_parameters(char* inp) {};
 
 }; 

@@ -67,12 +67,13 @@ int16_t Encoder::position() {
 }
 
 int16_t Encoder::speed() {
+    cli();
     uint8_t head = history_head;
     uint8_t tail = head + 1;
     if (tail >= history_length) {
         tail = 0;
     }
-    cli(); //stoppa interrupts til að copya >8 bit vals
+     //stoppa interrupts til að copya >8 bit vals
         int32_t new_time = enc_memory[head].timestamps;
         int32_t old_time = enc_memory[tail].timestamps;
         int8_t delta_pos = enc_memory[head].counter_mem - enc_memory[tail].counter_mem;

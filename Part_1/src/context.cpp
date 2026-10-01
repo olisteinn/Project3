@@ -44,3 +44,18 @@ void Context::on_fault()
 {
   this->state_->on_fault();
 }
+
+void Context::controller_selector(char* inp)
+{
+  this->state_->controller_selector(inp);
+}
+
+void Context::set_parameters(char* inp)
+{
+  this->state_->set_parameters(inp);
+}
+
+State *Context::get_state() const
+{
+  return this->state_;
+}

@@ -23,5 +23,10 @@ public:
 
   void on_fault();
 
+  void controller_selector(char* inp);
+
+  void set_parameters(char* inp);
+
+  State *get_state() const; 
 
 };
