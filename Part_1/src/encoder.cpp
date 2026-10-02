@@ -4,6 +4,13 @@
 #include <stdint.h>
 #include <string.h>
 
+
+extern Encoder motor;
+
+ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder class
+    motor.update(); // reads position and timestamps on encoder in pin interrupt
+  }
+
 Encoder::Encoder(int pin1, int pin2, int pin_out) 
   : P1(pin1), P2(pin2), Pout(pin_out) 
 {
