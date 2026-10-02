@@ -35,8 +35,5 @@ void Context::on_operate()
   this->state_->on_operate();
 }
 
-void Context::on_pre_operate()
-{
-  this->state_->on_pre_operate();
-}
+
 

@@ -9,8 +9,7 @@ private:
 
 public:
   Context(State *state);
-  ~Context();
-
+  
   void transition_to(State *state);
 
   void do_work();
@@ -18,8 +17,5 @@ public:
   void reset();
 
   void on_operate();
-
-  void on_pre_operate();
-
 
 };

@@ -63,7 +63,4 @@ void Operational::on_operate()
 
 }
 
-void Operational::on_pre_operate()
-{
 
-}

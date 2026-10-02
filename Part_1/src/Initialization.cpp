@@ -22,19 +22,18 @@ void Initialization::on_do()
 void Initialization::on_entry()
 {
   serial_println("Initialization");
-  cli();
+  cli(); // disable interrupts
   time_init(); // initalize timer 1 for time tracking use
   motor.init();  // initalize encoder
   bridge.init();  // initalize motor driver
   set_loop_ms(5,250); // sets loop durations in ms, one for controller loop other for serial print
-  led.init();
-  sei();
-  serial_println("Initialization complete");
+  led.init(); // initalize led
+  sei(); // enable interrupts
+  serial_println("Boot up complete");
 }
 
 void Initialization::on_exit()
 {
-  serial_println("Boot up complete");
   serial_print("Initialization -> ");
 }
 
@@ -48,9 +47,6 @@ void Initialization::on_operate()
   this->context_->transition_to(&operational_state);
 }
 
-void Initialization::on_pre_operate()
-{
 
-}
 
 
