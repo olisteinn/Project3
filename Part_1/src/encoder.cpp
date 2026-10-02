@@ -4,6 +4,12 @@
 #include <stdint.h>
 #include <string.h>
 
+extern Encoder motor;
+
+ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder class
+    motor.update(); // reads position and timestamps on encoder in pin interrupt
+  }
+
 Encoder::Encoder(int pin1, int pin2, int pin_out) 
   : P1(pin1), P2(pin2), Pout(pin_out) 
 {
@@ -74,8 +80,8 @@ int16_t Encoder::speed() {
         tail = 0;
     }
      //stoppa interrupts til að copya >8 bit vals
-        int32_t new_time = enc_memory[head].timestamps;
-        int32_t old_time = enc_memory[tail].timestamps;
+        uint32_t new_time = enc_memory[head].timestamps;
+        uint32_t old_time = enc_memory[tail].timestamps;
         int8_t delta_pos = enc_memory[head].counter_mem - enc_memory[tail].counter_mem;
     sei();
     if ((time_mus() - new_time) > timeout) {
