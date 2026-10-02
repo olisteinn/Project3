@@ -6,13 +6,11 @@
 #include "encoder.h"
 #include "drive.h"
 #include "P_controller.h"
-#include "PI_controller.h"
-#include <Context.h>
-#include <uart.h>
-#include <Initialization.h>
-#include <Operational.h>
-#include <State.h>
-#include "Fault_handling.h"
+#include "Context.h"
+#include "uart.h"
+#include "Initialization.h"
+#include "Operational.h"
+#include "State.h"
 #include "StopState.h"
 
 Initialization init_state;
@@ -25,7 +23,6 @@ Drive bridge(0,D8); // motor driver, (timer circuit no., slp pin)
 Digital_out led(D13);
 
 P_controller Pctrl(20);
-PI_controller PIctrl(3.2,2.4);
 controller* ctrl = &Pctrl;
 int16_t target_speed = -5000;  // Target speed = rpm*100
 
@@ -41,12 +38,6 @@ int main() {
   motor_state = &ctx;
 
   while (1) {
-    if (loop1 == true) {}
-    if (loop2 == true) {}
-    if (check_fault()) {
-      motor_state->transition_to(&stop_state);
-    }
-
   char c=0;
 
   if (serial_available()) {
