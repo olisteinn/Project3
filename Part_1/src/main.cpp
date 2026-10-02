@@ -11,7 +11,6 @@
 #include "Initialization.h"
 #include "Operational.h"
 #include "State.h"
-#include "StopState.h"
 
 Initialization init_state;
 Operational operational_state;

@@ -9,8 +9,7 @@ skinparam Padding 15
 [*] --> Initialization
 
 state Initialization {
-Initialization : entry / initialize parameters
-Initialization : exit / send Boot-up message
+Initialization : entry / initialize parameters,\nsend Boot-up message
 }
 
 state Operational {
