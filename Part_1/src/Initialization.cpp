@@ -18,12 +18,14 @@ extern Drive bridge;
 
 extern Digital_out led;
 
-extern double Kp_init;
-extern double Ti_init;
+extern double Kp_init_P;
+extern double Kp_init_PI;
+extern double Ti_init_PI;
+extern double Kp_inp_P;
+extern double Kp_inp_PI;
+extern double Ti_inp;
 extern P_controller Pctrl;
 extern PI_controller PIctrl;
-extern double Kp_inp;
-extern double Ti_inp;
 extern controller* ctrl;
 
 void Initialization::on_do()
@@ -42,10 +44,11 @@ void Initialization::on_entry()
   led.init();
   initFaultPin();
 
-  Pctrl  = P_controller(Kp_init);
-  PIctrl = PI_controller(Kp_init, Ti_init);
-  Kp_inp = Kp_init;          
-  Ti_inp = Ti_init;
+  Pctrl  = P_controller(Kp_init_P);
+  PIctrl = PI_controller(Kp_init_PI, Ti_init_PI);
+  Kp_inp_P  = Kp_init_P;
+  Kp_inp_PI = Kp_init_PI;
+  Ti_inp    = Ti_init_PI;
   ctrl   = &Pctrl;           
 
   sei();
