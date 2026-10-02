@@ -27,10 +27,6 @@ int16_t target_speed = -5000;  // Target speed = rpm*100
 
 bool put_reset, put_operate;
 
-ISR(INT0_vect) {  // D2 interrupt, INT0 activated by digital_in through encoder class
-  motor.update(); // reads position and timestamps on encoder in pin interrupt
-}
-
 int main() {
   serial_init();
   Context ctx(&init_state);
