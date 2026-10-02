@@ -22,7 +22,7 @@ class Encoder {
         static const uint8_t history_length = 40; // Averagear hraðann yfir þetta mörg steps, max 254 eða 255, annaðhvort idk
         History enc_memory[history_length];
         volatile uint8_t history_head = 0; 
-        const int32_t timeout = 100000; // microsek, fyrir .speed()
+        const uint32_t timeout = 100000; // microsek, fyrir .speed()
         int16_t rpm; // Reiknuð rpm
     public:
         Encoder(int pin1, int pin2, int pin_out); 

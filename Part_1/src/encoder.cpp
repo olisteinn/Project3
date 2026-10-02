@@ -80,8 +80,8 @@ int16_t Encoder::speed() {
         tail = 0;
     }
     cli(); //stoppa interrupts til að copya >8 bit vals
-        int32_t new_time = enc_memory[head].timestamps;
-        int32_t old_time = enc_memory[tail].timestamps;
+        uint32_t new_time = enc_memory[head].timestamps;
+        uint32_t old_time = enc_memory[tail].timestamps;
         int8_t delta_pos = enc_memory[head].counter_mem - enc_memory[tail].counter_mem;
     sei();
     if ((time_mus() - new_time) > timeout) {
