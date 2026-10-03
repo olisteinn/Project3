@@ -18,7 +18,7 @@ int16_t PI_controller::update(int16_t ref, int16_t actual) {
     int32_t edt = (int32_t)e*dt;
     last_time = curr_time;
     KiE += (Ki*(edt>>12))>>16;
-        int32_t total = (int32_t)Kpe+KiE;
+    int32_t total = (int32_t)Kpe+KiE;
     if (total > (255*128)) { // Kemur þessu í rétt snið fyrir 8 bit pwm
         return (255*128);
     } else if (total < -(255*128)) {

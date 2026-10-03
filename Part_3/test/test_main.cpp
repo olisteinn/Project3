@@ -23,10 +23,12 @@ void test_range(void) {
 void test_windup(void) {
     time_set(0);
     uint32_t dt = 5000;
-    PI_controller a(10, 0.1);
-    for (int i = 1; i < 100; i++)
+    PI_controller a(1, 0.1);
+    time_set(5000);
+    for (int i = 2; i < 1000; i++){
         time_set(dt*i);
         a.update(30000,0);
+    }
     TEST_ASSERT_EQUAL(32640, a.update(0,0));
 }
 
