@@ -1,7 +1,7 @@
 #pragma once
 #include "State.h"
 
-class Operational : public State
+class Initialization : public State
 {
 public:
   void on_do() override;
@@ -10,8 +10,7 @@ public:
 
   void reset() override;
   void on_operate() override;
-  void on_pre_operate() override;
   void on_fault() override;
 };
 
-extern Operational operational_state; 
+extern Initialization init_state;

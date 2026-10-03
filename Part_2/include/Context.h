@@ -9,7 +9,7 @@ private:
 
 public:
   Context(State *state);
-  ~Context();
+  ~Context() = default;
 
   void transition_to(State *state);
 
@@ -18,8 +18,6 @@ public:
   void reset();
 
   void on_operate();
-
-  void on_pre_operate();
 
   void on_fault();
 

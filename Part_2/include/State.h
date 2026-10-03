@@ -28,8 +28,6 @@ public:
 
   virtual void on_operate() = 0;
 
-  virtual void on_pre_operate() = 0;
-
   virtual void on_fault() = 0;
 
   virtual void controller_selector(char* inp) {};

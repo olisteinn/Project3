@@ -7,7 +7,6 @@
 #include "uart.h"
 #include "timer.h"
 #include <stdint.h>
-#include "PreOperational.h"
 
 extern Drive bridge;
 extern Digital_out led;
@@ -41,11 +40,6 @@ void StopState::reset()
 void StopState::on_operate()
 {
     this->context_->transition_to(&operational_state);
-}
-
-void StopState::on_pre_operate()
-{
-    this->context_->transition_to(&pre_op_state);
 }
 
 void StopState::on_fault()
