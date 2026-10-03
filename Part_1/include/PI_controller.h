@@ -11,4 +11,5 @@ class PI_controller : public controller {
     public:
         PI_controller(double Kp_arg, double Ti);
         int16_t update(int16_t ref, int16_t actual);
+        void reset() override;
 };

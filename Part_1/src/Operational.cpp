@@ -78,6 +78,7 @@ void Operational::on_entry()
   serial_println("Operational");
   led.set_hi();
   bridge.wake();
+  ctrl->reset();
 }
 
 void Operational::on_exit()

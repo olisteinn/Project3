@@ -35,3 +35,8 @@ int16_t PI_controller::update(int16_t ref, int16_t actual) {
         return total;
     }
 }
+
+void PI_controller::reset() {
+    KiE = 0;
+    last_time = time_mus();  
+}
