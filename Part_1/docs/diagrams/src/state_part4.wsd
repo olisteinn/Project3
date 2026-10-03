@@ -4,6 +4,7 @@ skinparam ArrowColor #333333
 skinparam StateBackgroundColor LightSkyBlue
 skinparam StateBorderColor Navy
 skinparam Padding 15
+skinparam dpi 300
 
 
 [*] --> Initialization
@@ -27,7 +28,9 @@ state Stopped {
 
 state PreOperational{
     PreOperational : entry / Stop motor
-    PreOperational : do / LED blink at 1 Hz, configure controller
+    PreOperational : do / LED blink at 1 Hz
+    PreOperational : P, PI / select controller
+    PreOperational : Kp, Ti / read and set parameters
     PreOperational : exit / LED off
 }
 
